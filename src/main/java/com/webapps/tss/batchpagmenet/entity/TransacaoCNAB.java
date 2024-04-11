@@ -1,4 +1,4 @@
-package com.webapps.tss.batchpagmenet.domain;
+package com.webapps.tss.batchpagmenet.entity;
 
 import java.math.BigDecimal;
 

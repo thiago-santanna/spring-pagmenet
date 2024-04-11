@@ -1,6 +1,6 @@
 package com.webapps.tss.batchpagmenet.web;
 
-import com.webapps.tss.batchpagmenet.domain.CnabService;
+import com.webapps.tss.batchpagmenet.service.CnabService;
 import org.springframework.batch.core.JobParametersInvalidException;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;

@@ -1,7 +1,8 @@
 package com.webapps.tss.batchpagmenet.job;
 
-import com.webapps.tss.batchpagmenet.domain.Transacao;
-import com.webapps.tss.batchpagmenet.domain.TransacaoCNAB;
+import com.webapps.tss.batchpagmenet.entity.TipoTransacao;
+import com.webapps.tss.batchpagmenet.entity.Transacao;
+import com.webapps.tss.batchpagmenet.entity.TransacaoCNAB;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.StepScope;
@@ -87,21 +88,26 @@ public class BatchConfig {
 
     @Bean
     ItemProcessor<TransacaoCNAB, Transacao> processor() {
-        return item ->
-            new Transacao(
+        return item -> {
+            var tipoTransacao = TipoTransacao.findByTipo(item.tipo());
+            var valorNormalizado = item.valor()
+                    .divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP)
+                    .multiply(tipoTransacao.getSinal());
+
+            return new Transacao(
                     null,
                     item.tipo(),
                     null,
-                    item.valor().divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP),
+                    valorNormalizado,
                     item.cpf(),
                     item.cartao(),
                     null,
-                    item.donoDaLoja(),
-                    item.nomeDaLoja()
+                    item.donoDaLoja().trim(),
+                    item.nomeDaLoja().trim()
             )
                     .withData(item.data())
                     .withHora(item.hora());
-
+        };
     }
 
     @Bean

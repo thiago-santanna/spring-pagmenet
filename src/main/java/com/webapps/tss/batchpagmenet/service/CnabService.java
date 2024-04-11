@@ -1,4 +1,4 @@
-package com.webapps.tss.batchpagmenet.domain;
+package com.webapps.tss.batchpagmenet.service;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParametersBuilder;
