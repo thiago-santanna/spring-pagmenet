@@ -1,6 +1,10 @@
 package com.webapps.tss.batchpagmenet.web;
 
 import com.webapps.tss.batchpagmenet.domain.CnabService;
+import org.springframework.batch.core.JobParametersInvalidException;
+import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
+import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
+import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,7 +25,7 @@ public class CnabController {
     }
 
     @PostMapping("upload")
-    public String upload(@RequestParam("file") MultipartFile file) throws IOException {
+    public String upload(@RequestParam("file") MultipartFile file) throws IOException, JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
         cnabService.uploadCnabFile(file);
         return "Processamento iniciado";
     }
